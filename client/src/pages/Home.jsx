@@ -1,9 +1,13 @@
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+
 function Home() {
   return (
-    <div>
-      <h1>Campus Issue Management System</h1>
-      <p>Welcome to our project.</p>
-    </div>
+    <>
+      <Navbar />
+
+      <Hero />
+    </>
   );
 }
 
