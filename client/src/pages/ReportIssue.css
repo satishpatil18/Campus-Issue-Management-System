@@ -1,0 +1,142 @@
+.report-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 50px 20px;
+}
+
+.report-container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.report-header {
+  margin-bottom: 30px;
+}
+
+.report-header h1 {
+  margin: 0 0 8px;
+  color: #1e293b;
+  font-size: 32px;
+}
+
+.report-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.report-form {
+  background: white;
+  padding: 35px;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.cancel-btn,
+.submit-btn {
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: white;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.submit-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+.cancel-btn:hover {
+  background: #eff6ff;
+}
+
+.submit-btn:hover {
+  background: #1d4ed8;
+}
+
+
+@media (max-width: 700px) {
+
+  .report-page {
+    padding: 30px 15px;
+  }
+
+  .report-form {
+    padding: 25px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+.form-message {
+  margin: 5px 0 20px;
+  color: #2563eb;
+  font-weight: 600;
+}
