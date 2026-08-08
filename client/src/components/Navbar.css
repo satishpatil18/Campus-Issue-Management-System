@@ -38,3 +38,24 @@
 .nav-links a:hover{
     color:#FFD54F;
 }
+
+@media (max-width:768px){
+
+  .navbar{
+    flex-direction:column;
+    gap:20px;
+    padding:20px;
+  }
+
+  .logo{
+    font-size:1.4rem;
+    text-align:center;
+  }
+
+  .nav-links{
+    gap:25px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+}

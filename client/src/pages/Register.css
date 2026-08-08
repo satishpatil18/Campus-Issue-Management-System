@@ -1,0 +1,13 @@
+.form-group select {
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+    background: white;
+    color: #334155;
+    outline: none;
+}
+
+.form-group select:focus {
+    border-color: #2563eb;
+}
