@@ -59,3 +59,17 @@
 .auth-link a:hover {
     text-decoration: underline;
 }
+
+.form-error {
+    margin: 5px 0 20px;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-success {
+    margin: 5px 0 20px;
+    color: #16a34a;
+    font-size: 14px;
+    font-weight: 500;
+}
