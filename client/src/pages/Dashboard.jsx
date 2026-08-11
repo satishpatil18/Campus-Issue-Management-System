@@ -1,7 +1,9 @@
 import "./Dashboard.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
   return (
     <div className="dashboard">
 
@@ -28,8 +30,15 @@ function Dashboard() {
           </a>
         </nav>
 
-        <button className="logout-btn">
-          Logout
+        <button
+         className="logout-btn"
+         onClick={() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          navigate("/login");
+         }}
+        >
+         Logout
         </button>
       </aside>
 
