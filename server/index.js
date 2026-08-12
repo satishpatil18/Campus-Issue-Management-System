@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const db = require("./database");
 const authRoutes = require("./routes/auth");
+const issueRoutes = require("./routes/issues");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.locals.db = db;
 
 app.use("/api/auth", authRoutes);
+app.use("/api/issues", issueRoutes);
 
 app.get("/", (req, res) => {
   res.json({

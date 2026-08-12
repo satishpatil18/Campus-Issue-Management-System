@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createIssue } from "../services/api";
 import "./ReportIssue.css";
 
 function ReportIssue() {
@@ -24,24 +25,46 @@ function ReportIssue() {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    if (
-      !formData.title ||
-      !formData.category ||
-      !formData.location ||
-      !formData.description
-    ) {
-      setMessage("Please fill in all the required fields.");
-      return;
-    }
+  setMessage("");
 
-    setMessage("Issue submitted successfully!");
+  if (
+    !formData.title ||
+    !formData.category ||
+    !formData.location ||
+    !formData.description
+  ) {
+    setMessage("Please fill in all the required fields.");
+    return;
+  }
 
-    console.log("Submitted Issue:", formData);
-  };
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
 
+    const data = await createIssue({
+      title: formData.title,
+      category: formData.category,
+      priority: formData.priority,
+      location: formData.location,
+      description: formData.description,
+      user_id: user.id,
+    });
+
+    setMessage(data.message);
+
+    setFormData({
+      title: "",
+      category: "",
+      priority: "Low",
+      location: "",
+      description: "",
+    });
+  } catch (error) {
+    setMessage(error.message);
+  }
+};
   return (
     <div className="report-page">
 

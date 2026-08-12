@@ -44,3 +44,21 @@ export const registerUser = async (userData) => {
 
   return data;
 };
+
+export const createIssue = async (issueData) => {
+  const response = await fetch(`${API_URL}/api/issues`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(issueData),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to report issue.");
+  }
+
+  return data;
+};
