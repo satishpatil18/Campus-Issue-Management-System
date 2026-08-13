@@ -45,11 +45,12 @@ export const registerUser = async (userData) => {
   return data;
 };
 
-export const createIssue = async (issueData) => {
+export const createIssue = async (issueData, token) => {
   const response = await fetch(`${API_URL}/api/issues`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(issueData),
   });

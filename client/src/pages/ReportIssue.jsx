@@ -41,16 +41,23 @@ function ReportIssue() {
   }
 
   try {
-    const user = JSON.parse(localStorage.getItem("user"));
+const token = localStorage.getItem("token");
 
-    const data = await createIssue({
-      title: formData.title,
-      category: formData.category,
-      priority: formData.priority,
-      location: formData.location,
-      description: formData.description,
-      user_id: user.id,
-    });
+if (!token) {
+  setMessage("You are not logged in.");
+  return;
+}
+
+const data = await createIssue(
+  {
+    title: formData.title,
+    category: formData.category,
+    priority: formData.priority,
+    location: formData.location,
+    description: formData.description,
+  },
+  token
+);
 
     setMessage(data.message);
 

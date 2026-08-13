@@ -1,16 +1,16 @@
 const express = require("express");
+const authenticateToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
+router.post("/", authenticateToken, (req, res) => {
   try {
-    const {
+   const {
       title,
       category,
       priority,
       location,
       description,
-      user_id,
     } = req.body;
 
     if (
@@ -18,8 +18,7 @@ router.post("/", (req, res) => {
       !category ||
       !priority ||
       !location ||
-      !description ||
-      !user_id
+      !description
     ) {
       return res.status(400).json({
         message: "Please provide all required issue details.",
@@ -40,7 +39,7 @@ router.post("/", (req, res) => {
         priority,
         location,
         description,
-        user_id
+        req.user.id
       );
 
     res.status(201).json({
