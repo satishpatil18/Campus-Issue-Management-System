@@ -1,9 +1,46 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getMyIssues } from "../services/api";
 import "./Dashboard.css";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const navigate = useNavigate();
+
+  const [issues, setIssues] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchIssues = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+
+        const data = await getMyIssues(token);
+
+        setIssues(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchIssues();
+  }, [navigate]);
+
+  const pendingIssues = issues.filter(
+    (issue) => issue.status.toLowerCase() === "pending"
+  ).length;
+
+  const resolvedIssues = issues.filter(
+    (issue) => issue.status.toLowerCase() === "resolved"
+  ).length;
+
   return (
     <div className="dashboard">
 
@@ -31,14 +68,14 @@ function Dashboard() {
         </nav>
 
         <button
-         className="logout-btn"
-         onClick={() => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          navigate("/login");
-         }}
+          className="logout-btn"
+          onClick={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            navigate("/login");
+          }}
         >
-         Logout
+          Logout
         </button>
       </aside>
 
@@ -63,17 +100,17 @@ function Dashboard() {
         <div className="dashboard-cards">
 
           <div className="dashboard-card">
-            <h3>3</h3>
+            <h3>{issues.length}</h3>
             <p>Reported Issues</p>
           </div>
 
           <div className="dashboard-card">
-            <h3>1</h3>
+            <h3>{pendingIssues}</h3>
             <p>Pending Issues</p>
           </div>
 
           <div className="dashboard-card">
-            <h3>2</h3>
+            <h3>{resolvedIssues}</h3>
             <p>Resolved Issues</p>
           </div>
 
@@ -87,46 +124,39 @@ function Dashboard() {
 
             <Link to="/report-issue" className="report-btn">
               + Report Issue
-            </Link>  
+            </Link>
           </div>
 
 
           <div className="issue-list">
 
-            <div className="issue-item">
-              <div>
-                <h3>Broken classroom fan</h3>
-                <p>Classroom • 2 days ago</p>
-              </div>
+            {loading ? (
+              <p>Loading issues...</p>
+            ) : error ? (
+              <p className="issue-error">{error}</p>
+            ) : issues.length === 0 ? (
+              <p>No issues reported yet.</p>
+            ) : (
+              issues.map((issue) => (
+                <div className="issue-item" key={issue.id}>
 
-              <span className="status pending">
-                Pending
-              </span>
-            </div>
+                  <div>
+                    <h3>{issue.title}</h3>
 
+                    <p>
+                      {issue.category} • {issue.location}
+                    </p>
+                  </div>
 
-            <div className="issue-item">
-              <div>
-                <h3>Lab computer not working</h3>
-                <p>Computer Lab • 4 days ago</p>
-              </div>
+                  <span
+                    className={`status ${issue.status.toLowerCase()}`}
+                  >
+                    {issue.status}
+                  </span>
 
-              <span className="status resolved">
-                Resolved
-              </span>
-            </div>
-
-
-            <div className="issue-item">
-              <div>
-                <h3>Water dispenser issue</h3>
-                <p>Block A • 5 days ago</p>
-              </div>
-
-              <span className="status resolved">
-                Resolved
-              </span>
-            </div>
+                </div>
+              ))
+            )}
 
           </div>
 

@@ -3,6 +3,39 @@ const authenticateToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+router.get("/my", authenticateToken, (req, res) => {
+  try {
+    const db = req.app.locals.db;
+
+    const issues = db
+      .prepare(
+        `SELECT
+          id,
+          title,
+          category,
+          priority,
+          location,
+          description,
+          status,
+          created_at
+         FROM issues
+         WHERE user_id = ?
+         ORDER BY created_at DESC`
+      )
+      .all(req.user.id);
+
+    res.json({
+      issues,
+    });
+  } catch (error) {
+    console.error("Fetching issues error:", error);
+
+    res.status(500).json({
+      message: "Something went wrong while fetching issues.",
+    });
+  }
+});
+
 router.post("/", authenticateToken, (req, res) => {
   try {
    const {
